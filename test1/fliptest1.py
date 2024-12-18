@@ -57,3 +57,20 @@ class FlipTest1(Scene):
         gauss_shade = ax.get_area(gauss_curve,color=(ManimColor('#58C4DD'),RED),opacity=0.9)
 
         self.add(ax, gauss_shade, gauss_curve)
+
+
+class FlipTest2(ThreeDScene):
+    def construct(self):
+        ax = ThreeDAxes(
+            x_range=[-5, 5],
+            y_range=[-1, 1],
+            z_range=[-5, 5],
+        )
+        labels = ax.get_axis_labels()
+        gauss_curve = ax.plot(lambda t: np.exp(-0.5*(t**2)), color=BLUE_C)
+        colors = color_gradient([BLUE, GREEN], 100)
+        gauss_shade = ax.get_area(gauss_curve,color=(ManimColor('#58C4DD'),RED),opacity=0.9)
+
+        self.set_camera_orientation(zoom=0.5)
+        self.add(ax, gauss_shade, gauss_curve)
+        self.move_camera(phi=-10*DEGREES, theta=-90*DEGREES, run_time=2)
