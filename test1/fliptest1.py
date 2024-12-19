@@ -63,14 +63,24 @@ class FlipTest2(ThreeDScene):
     def construct(self):
         ax = ThreeDAxes(
             x_range=[-5, 5],
-            y_range=[-1, 1],
-            z_range=[-5, 5],
+            y_range=[-0.01, 0.01],
+            z_range=[0, 1],
+            tips=False,
         )
         labels = ax.get_axis_labels()
-        gauss_curve = ax.plot(lambda t: np.exp(-0.5*(t**2)), color=BLUE_C)
-        colors = color_gradient([BLUE, GREEN], 100)
-        gauss_shade = ax.get_area(gauss_curve,color=(ManimColor('#58C4DD'),RED),opacity=0.9)
+        gauss_curve = ParametricFunction(
+            lambda t: np.array([t, 0, np.exp(-0.5*(t**2))]),
+            t_range = (-5, 5),
+            color=RED
+        )
+
+        #gauss_curve = ParametricFunction( lambda t: ( t, 0, np.exp(-0.5*(t**2))), t_range=(-5, 5, 0.01)).set_shade_in_3d(True)
+        #ax.plot(lambda t: (t, 0, np.exp(-0.5*(t**2))))
+        # gauss_curve = ax.plot(lambda t: np.exp(-0.5(t**2)), color=BLUE_C)
+        #colors = color_gradient([BLUE, GREEN], 100)
+        #gauss_shade = ax.get_area(gauss_curve,color=(ManimColor('#58C4DD'),RED),opacity=0.9)
 
         self.set_camera_orientation(zoom=0.5)
-        self.add(ax, gauss_shade, gauss_curve)
-        self.move_camera(phi=-10*DEGREES, theta=-90*DEGREES, run_time=2)
+        self.add(ax, gauss_curve)
+        #self.move_camera(phi=-30*DEGREES, theta=-90*DEGREES, run_time=2)
+        self.move_camera(phi=75*DEGREES, theta=-45*DEGREES, run_time=2)
